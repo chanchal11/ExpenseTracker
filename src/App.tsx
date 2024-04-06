@@ -1,113 +1,90 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-import 'react-native-gesture-handler';
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import * as React from 'react';
+import { View } from 'react-native';
+import { BottomNavigation, Button, Text } from 'react-native-paper';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+const MusicRoute = ({ }: any) => {
 
-// const Tab = createMaterialBottomTabNavigator();
+  const navigation = useNavigation();
 
-// function MyTabs() {
-//   return (
-//     <Tab.Navigator
-//       initialRouteName="Feed"
-//       screenOptions={({ route }) => ({
-//         tabBarIcon: ({ focused, color }) => {
-//           let iconName;
-
-//           if (route.name === 'Feed') {
-//             iconName = 'home';
-//           } else if (route.name === 'Notifications') {
-//             iconName = 'list';
-//           } else if (route.name === 'Profile') {
-//             iconName = 'person';
-//           }
-
-//           // You can return any component that you like here!
-//           return <View><Text>{iconName}</Text></View>;
-//         },
-//       })}
-
-//       // tabBarOptions={{
-//       //   activeTintColor: 'tomato',
-//       //   inactiveTintColor: 'gray',
-//       // }}
-//     >
-//       <Tab.Screen
-//         name="Feed"
-//         component={FeedScreen}
-//         options={{ tabBarLabel: 'Home' }}
-//       />
-//       <Tab.Screen
-//         name="Notifications"
-//         component={NotificationsScreen}
-//         options={{ tabBarLabel: 'Notifications' }}
-//       />
-//       <Tab.Screen
-//         name="Profile"
-//         component={ProfileScreen}
-//         options={{ tabBarLabel: 'Profile' }}
-//       />
-//     </Tab.Navigator>
-//   );
-// }
-
-function FeedScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed</Text>
+    <View>
+      <Text>Music</Text>
+      <Button mode="contained" onPress={() => navigation.navigate('Notifications' as never)} >Albums</Button>
     </View>
   );
-}
+};
 
-function NotificationsScreen() {
+const AlbumsRoute = () => <Text>Albums</Text>;
+
+const RecentsRoute = () => <Text>Recents</Text>;
+
+const NotificationsRoute = () => <Text>Notifications</Text>;
+
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notifications</Text>
-    </View>
-  );
-}
-
-function ProfileScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile</Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-
-  return (
-    <SafeAreaView>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+    <Tab.Navigator
+      initialRouteName="Feed"
+      screenOptions={{
+        tabBarActiveTintColor: '#e91e63',
+        tabBarStyle: {
+          height: 60,
+          position: 'absolute',
+          bottom: 16,
+          right: 16,
+          left: 16,
+          borderRadius: 16
+        }
+      }}
+    >
+      <Tab.Screen
+        name="Feed"
+        component={MusicRoute}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
       />
-      <Text>Hiii</Text>
-    </SafeAreaView>
+      <Tab.Screen
+        name="Notifications"
+        component={RecentsRoute}
+        options={{
+          tabBarLabel: 'Updates',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bell" color={color} size={size} />
+          ),
+          tabBarBadge: 3,
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={NotificationsRoute}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({});
-
-export default App;
-
-
-
-
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <MyTabs />
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+}
