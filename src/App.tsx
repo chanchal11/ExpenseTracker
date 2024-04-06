@@ -9,6 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './store/configureStore';
+import ExpenseTracker from './components/ExpenseTracker';
 
 const MusicRoute = ({ }: any) => {
 
@@ -48,7 +49,7 @@ function MyTabs() {
     >
       <Tab.Screen
         name="Feed"
-        component={MusicRoute}
+        component={ExpenseTracker}
         options={{
           tabBarLabel: 'Home',
           tabBarShowLabel: false,
