@@ -22,6 +22,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses }) => {
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <ExpenseItem
+          key={item.id}
           description={item.description}
           amount={item.amount}
           medium={item.medium}

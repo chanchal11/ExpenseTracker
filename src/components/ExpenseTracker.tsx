@@ -1,5 +1,5 @@
 // ExpenseTracker.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import ExpenseList from './ExpenseList';
@@ -8,24 +8,40 @@ import ExpenseForm from './ExpenseForm';
 import ExpenseDialog from './ExpenseDialog';
 import FloatingButton from './FloatingButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { addExpense, addMedium, Expense, Medium } from '../store/expenseSlice';
+import { addExpense, setExpenses } from '../store/expenseSlice';
+import { Expense, Medium } from '../types';
+import { addMedium, setMediums } from '../store/mediumSlice';
+import { addExpenseWithSQLite } from '../store/expenseThunks';
+import { addMediumWithSQLite } from '../store/mediumThunks';
+import { loadInitialExpensesFromSQLite, loadInitialMediumFromSQLite } from '../database';
 
 
 
 const ExpenseTracker: React.FC = () => {
   const dispatch = useDispatch();  
   const expenses = useSelector((state: any) => state.expenses.expenses);
-  const mediums = useSelector((state: any) => state.expenses.mediums);  
+  const mediums = useSelector((state: any) => state.mediums.mediums);  
   const [filteredMedium, setFilteredMedium] = useState<string>('');
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
+
+  useEffect(()=> {
+    (async () => {
+      const expenses = await loadInitialExpensesFromSQLite();
+      const mediums = await loadInitialMediumFromSQLite();
+      dispatch(setExpenses(expenses));
+      dispatch(setMediums(mediums));
+    })();
+  }, [])
 
   const handleFilterChange = (medium: string) => {
     setFilteredMedium(medium);
   };
 
   const handleAddExpense = (expense: Expense) => {
-    dispatch(addExpense({ ...expense, id: (expenses.length + 1).toString() }));
-    dispatch(addMedium(expense.medium));
+    dispatch(addExpenseWithSQLite(expense));
+    if(!mediums.some((medium: Medium) => medium.medium === expense.medium)) {
+      dispatch(addMediumWithSQLite({medium: expense.medium}));
+    }
     setDialogVisible(false); // Close the dialog after adding expense
   };
 
@@ -37,7 +53,7 @@ const ExpenseTracker: React.FC = () => {
     <PaperProvider>
       <View style={styles.container}>
         <ExpenseFilter
-          mediums={mediums.map((medium: Medium) => medium.medium)} // Array.from(new Set(expenses.map((expense: Expense) => expense.medium)))  You can replace this with dynamically fetched mediums
+          mediums={mediums?.map((medium: Medium) => medium.medium) || [] } // Array.from(new Set(expenses.map((expense: Expense) => expense.medium)))  You can replace this with dynamically fetched mediums
           selectedMedium={filteredMedium}
           onSelectMedium={handleFilterChange}
         />

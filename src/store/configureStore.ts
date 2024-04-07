@@ -1,26 +1,16 @@
 // src/store/configureStore.ts
 
 import { configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { thunk } from 'redux-thunk';
+import { createAsyncThunk, createSlice, isAnyOf, isFulfilled } from '@reduxjs/toolkit';
+import { ThunkMiddleware } from 'redux-thunk';
+
 import rootReducer from './rootReducer';
 
-const persistConfig = {
-  key: 'root',
-  storage: AsyncStorage,
-  whitelist: ['auth', 'expenses'],
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false, // Disable serializable check for Redux Persist
-    }),
+    getDefaultMiddleware().concat(thunk),
 });
 
-export const persistor = persistStore(store);
 export default store;
-
