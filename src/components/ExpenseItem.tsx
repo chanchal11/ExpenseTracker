@@ -1,19 +1,19 @@
 // ExpenseItem.tsx
 import React from 'react';
-import { List } from 'react-native-paper';
+import { List, Text, useTheme } from 'react-native-paper';
+import { Expense } from '../types';
 
-interface ExpenseItemProps {
-  description: string;
-  amount: number;
-  medium: string;
-}
+const ExpenseItem: React.FC<Expense> = ({ description, amount, medium, date }) => {
+  const theme = useTheme();
 
-const ExpenseItem: React.FC<ExpenseItemProps> = ({ description, amount, medium }) => {
   return (
     <List.Item
       title={description}
-      description={`Amount: ${amount}, Medium: ${medium}`}
-      left={(props) => <List.Icon {...props} icon="cash" />}
+      description={`Medium: ${medium}, Date: ${new Date(date).toLocaleDateString()}`}
+      left={(props) => <List.Icon {...props} icon="cash" color={theme.colors.primary} />}
+      style={{ backgroundColor: theme.colors.surface, marginBottom: 8, borderRadius: 8 }}
+      titleStyle={{ color: theme.colors.primary }}
+      right={() => <Text style={{ color: theme.colors.primary, fontSize: 26 }} >$ {amount}</Text>}
     />
   );
 };

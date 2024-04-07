@@ -3,13 +3,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { List } from 'react-native-paper';
 import ExpenseItem from './ExpenseItem';
-
-interface Expense {
-  id: string;
-  description: string;
-  amount: number;
-  medium: string;
-}
+import { Expense } from '../types';
 
 interface ExpenseListProps {
   expenses: Expense[];
@@ -26,6 +20,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses }) => {
           description={item.description}
           amount={item.amount}
           medium={item.medium}
+          date={item.date}
         />
       )}
     />

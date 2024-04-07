@@ -36,6 +36,7 @@ function MyTabs() {
       initialRouteName="Feed"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
+        tabBarShowLabel: false,
         tabBarStyle: {
           height: 60,
           position: 'absolute',
