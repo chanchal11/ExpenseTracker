@@ -1,7 +1,7 @@
 // ExpenseTracker.tsx
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, Text } from 'react-native-paper';
 import ExpenseList from './ExpenseList';
 import ExpenseFilter from './ExpenseFilter';
 import ExpenseForm from './ExpenseForm';
@@ -38,7 +38,7 @@ const ExpenseTracker: React.FC = () => {
   };
 
   const handleAddExpense = (expense: Expense) => {
-    dispatch(addExpenseWithSQLite(expense));
+    dispatch(addExpenseWithSQLite({...expense,id: Math.random()}));
     if(!mediums.some((medium: Medium) => medium.medium === expense.medium)) {
       dispatch(addMediumWithSQLite({medium: expense.medium}));
     }
@@ -52,12 +52,15 @@ const ExpenseTracker: React.FC = () => {
   return (
     <PaperProvider>
       <View style={styles.container}>
-        <ExpenseFilter
-          mediums={mediums?.map((medium: Medium) => medium.medium) || [] } // Array.from(new Set(expenses.map((expense: Expense) => expense.medium)))  You can replace this with dynamically fetched mediums
-          selectedMedium={filteredMedium}
-          onSelectMedium={handleFilterChange}
-        />
+        <View style={{ alignItems: 'flex-start', flexDirection: 'row' }} >
+          <ExpenseFilter
+            mediums={mediums?.map((medium: Medium) => medium.medium) || [] } // Array.from(new Set(expenses.map((expense: Expense) => expense.medium)))  You can replace this with dynamically fetched mediums
+            selectedMedium={filteredMedium}
+            onSelectMedium={handleFilterChange}
+          />
+        </View>
         <ExpenseList expenses={filteredExpenses} />
+        <Text style={{textAlign: 'left', fontSize: 30, color: 'blue'}} >Total: $ {filteredExpenses.reduce((acc:number,cv:Expense) => acc + cv.amount, 0 )}</Text>
         <FloatingButton onPress={() => setDialogVisible(true)} />
         <ExpenseDialog
           visible={dialogVisible}

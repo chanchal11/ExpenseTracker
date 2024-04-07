@@ -22,11 +22,9 @@ const MusicRoute = ({ }: any) => {
   );
 };
 
-const AlbumsRoute = () => <Text>Albums</Text>;
+const Charts = () => <Text>Charts</Text>;
 
-const RecentsRoute = () => <Text>Recents</Text>;
-
-const NotificationsRoute = () => <Text>Notifications</Text>;
+const Settings = () => <Text>Settings</Text>;
 
 const Tab = createBottomTabNavigator();
 
@@ -48,34 +46,34 @@ function MyTabs() {
       }}
     >
       <Tab.Screen
-        name="Feed"
+        name="Expenses"
         component={ExpenseTracker}
         options={{
           tabBarLabel: 'Home',
           tabBarShowLabel: false,
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="Notifications"
-        component={RecentsRoute}
+        name="Charts"
+        component={Charts}
         options={{
-          tabBarLabel: 'Updates',
+          tabBarLabel: 'Charts',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={size} />
-          ),
-          tabBarBadge: 3,
+            <MaterialCommunityIcons name="chart-box" color={color} size={size} />
+          )
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={NotificationsRoute}
+        name="Settings"
+        component={Settings}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons name="account-settings" color={color} size={size} />
           ),
         }}
       />
