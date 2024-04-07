@@ -7,22 +7,15 @@ import ExpenseFilter from './ExpenseFilter';
 import ExpenseForm from './ExpenseForm';
 import ExpenseDialog from './ExpenseDialog';
 import FloatingButton from './FloatingButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { addExpense, addMedium, Expense, Medium } from '../store/expenseSlice';
 
-interface Expense {
-  id: string;
-  description: string;
-  amount: number;
-  medium: string;
-}
 
-const initialExpenses: Expense[] = [
-  { id: '1', description: 'Groceries', amount: 50, medium: 'Food' },
-  { id: '2', description: 'Electricity Bill', amount: 100, medium: 'Utilities' },
-  { id: '3', description: 'Dinner', amount: 30, medium: 'Food' },
-];
 
 const ExpenseTracker: React.FC = () => {
-  const [expenses, setExpenses] = useState<Expense[]>(initialExpenses);
+  const dispatch = useDispatch();  
+  const expenses = useSelector((state: any) => state.expenses.expenses);
+  const mediums = useSelector((state: any) => state.expenses.mediums);  
   const [filteredMedium, setFilteredMedium] = useState<string>('');
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
 
@@ -31,19 +24,20 @@ const ExpenseTracker: React.FC = () => {
   };
 
   const handleAddExpense = (expense: Expense) => {
-    setExpenses([...expenses, { ...expense, id: (expenses.length + 1).toString() }]);
+    dispatch(addExpense({ ...expense, id: (expenses.length + 1).toString() }));
+    dispatch(addMedium(expense.medium));
     setDialogVisible(false); // Close the dialog after adding expense
   };
 
   const filteredExpenses = filteredMedium
-    ? expenses.filter((expense) => expense.medium === filteredMedium)
+    ? expenses.filter((expense: Expense) => expense.medium === filteredMedium)
     : expenses;
 
   return (
     <PaperProvider>
       <View style={styles.container}>
         <ExpenseFilter
-          mediums={['Food', 'Utilities', 'Others']} // You can replace this with dynamically fetched mediums
+          mediums={mediums.map((medium: Medium) => medium.medium)} // Array.from(new Set(expenses.map((expense: Expense) => expense.medium)))  You can replace this with dynamically fetched mediums
           selectedMedium={filteredMedium}
           onSelectMedium={handleFilterChange}
         />

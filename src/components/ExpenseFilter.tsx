@@ -23,7 +23,7 @@ const ExpenseFilter: React.FC<ExpenseFilterProps> = ({ mediums, selectedMedium, 
         onDismiss={closeMenu}
         anchor={<Button onPress={openMenu}>{selectedMedium ? selectedMedium : "Filter by Medium"}</Button>}
       >
-        {mediums.map((medium) => (
+        {mediums?.map((medium) => (
           <Menu.Item key={medium} onPress={() => { onSelectMedium(medium); closeMenu(); }} title={medium} />
         ))}
         <Menu.Item onPress={() => { onSelectMedium(''); closeMenu(); }} title="Clear Filter" />
