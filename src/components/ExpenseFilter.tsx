@@ -1,7 +1,7 @@
 // ExpenseFilter.tsx
 import React from 'react';
 import { View } from 'react-native';
-import { Button, Menu } from 'react-native-paper';
+import { Button, Menu, useTheme } from 'react-native-paper';
 
 interface ExpenseFilterProps {
   mediums: string[];
@@ -11,7 +11,7 @@ interface ExpenseFilterProps {
 
 const ExpenseFilter: React.FC<ExpenseFilterProps> = ({ mediums, selectedMedium, onSelectMedium }) => {
   const [visible, setVisible] = React.useState(false);
-
+  const theme = useTheme();
   const openMenu = () => setVisible(true);
 
   const closeMenu = () => setVisible(false);
@@ -21,7 +21,9 @@ const ExpenseFilter: React.FC<ExpenseFilterProps> = ({ mediums, selectedMedium, 
       <Menu
         visible={visible}
         onDismiss={closeMenu}
-        anchor={<Button onPress={openMenu}>{selectedMedium ? selectedMedium : "Filter by Medium"}</Button>}
+        anchor={<Button mode="contained"
+          style={{ marginBottom: 10, marginRight: 10 }}
+          theme={{ colors: { primary: theme.colors.primary } }} onPress={openMenu}>{selectedMedium ? selectedMedium : "Filter by Medium"}</Button>}
       >
         {mediums?.map((medium) => (
           <Menu.Item key={medium} onPress={() => { onSelectMedium(medium); closeMenu(); }} title={medium} />

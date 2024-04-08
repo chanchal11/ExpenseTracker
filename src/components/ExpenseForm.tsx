@@ -14,7 +14,7 @@ const ExpenseForm: React.FC<any> = ({ onSubmit }: any) => {
   const [medium, setMedium] = useState('');
   const [date, setDate] = useState(new Date());
   const handleSubmit = () => {
-    onSubmit({ description, amount: parseFloat(amount), medium, date: date.getMilliseconds() });
+    onSubmit({ description, amount: parseFloat(amount), medium, date: date.getTime() });
     setDescription('');
     setAmount('');
     setMedium('');
