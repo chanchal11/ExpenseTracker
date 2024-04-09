@@ -17,9 +17,6 @@ const ExpenseDialog: React.FC<any> = ({ visible, onClose, onSubmit }) => {
         <Dialog.Content>
           <ExpenseForm onSubmit={onSubmit} />
         </Dialog.Content>
-        <Dialog.Actions>
-          <Button mode="contained" onPress={onClose} >Cancel</Button>
-        </Dialog.Actions>
       </Dialog>
     </Portal>
   );

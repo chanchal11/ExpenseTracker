@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-import { TextInput as PaperInput } from 'react-native-paper';
+import { TextInput as PaperInput, useTheme } from 'react-native-paper';
 
 interface ExpenseFormProps {
   onSubmit: (expense: { description: string; amount: number; medium: string }) => void;
@@ -13,6 +13,7 @@ const ExpenseForm: React.FC<any> = ({ onSubmit }: any) => {
   const [amount, setAmount] = useState('');
   const [medium, setMedium] = useState('');
   const [date, setDate] = useState(new Date());
+  const theme = useTheme();
   const handleSubmit = () => {
     onSubmit({ description, amount: parseFloat(amount), medium, date: date.getTime() });
     setDescription('');
@@ -44,7 +45,7 @@ const ExpenseForm: React.FC<any> = ({ onSubmit }: any) => {
         onDateChange={setDate}
         mode="date"
       />
-      <Button title="Submit" onPress={handleSubmit} />
+      <Button title="Submit" onPress={handleSubmit} color={theme.colors.primary} />
     </View>
   );
 };
