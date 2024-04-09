@@ -8,8 +8,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Provider } from 'react-redux';
 import store from './store/configureStore';
-import ExpenseTracker from './components/ExpenseTracker';
+import ExpenseTracker from './screens/ExpenseTracker';
 
+// not needed delete it
 const MusicRoute = ({ }: any) => {
 
   const navigation = useNavigation();

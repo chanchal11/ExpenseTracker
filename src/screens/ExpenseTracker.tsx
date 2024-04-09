@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Provider as PaperProvider, Text, useTheme } from 'react-native-paper';
-import ExpenseList from './ExpenseList';
-import ExpenseFilter from './ExpenseFilter';
-import ExpenseForm from './ExpenseForm';
-import ExpenseDialog from './ExpenseDialog';
-import FloatingButton from './FloatingButton';
+import ExpenseList from '../components/ExpenseList';
+import ExpenseFilter from '../components/ExpenseFilter';
+import ExpenseForm from '../components/ExpenseForm';
+import ExpenseDialog from '../components/ExpenseDialog';
+import FloatingButton from '../components/FloatingButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { addExpense, setExpenses } from '../store/expenseSlice';
 import { Expense, ExpenseWithId, Medium } from '../types';
@@ -14,10 +14,10 @@ import { addMedium, setMediums } from '../store/mediumSlice';
 import { addExpenseWithSQLite } from '../store/expenseThunks';
 import { addMediumWithSQLite } from '../store/mediumThunks';
 import { loadInitialExpensesFromSQLite, loadInitialMediumFromSQLite } from '../database';
-import DateRangePicker from './DateRangePicker';
+import DateRangePicker from '../components/DateRangePicker';
 import { useDefaultMonthDates } from '../hooks/useDefaultMonthDates';
 
-
+// not needed delete it
 const applyFilters = (expenses: ExpenseWithId[], startDate: Date | null, endDate: Date | null, medium: string) => {
   let newFilteredExpenses: ExpenseWithId[] = [...expenses];
   if (startDate && endDate) {
