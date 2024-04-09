@@ -9,6 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Provider } from 'react-redux';
 import store from './store/configureStore';
 import ExpenseTracker from './screens/ExpenseTracker';
+import { ChartsScreen } from './screens/Charts';
 
 // not needed delete it
 const MusicRoute = ({ }: any) => {
@@ -22,8 +23,6 @@ const MusicRoute = ({ }: any) => {
     </View>
   );
 };
-
-const Charts = () => <Text>Charts</Text>;
 
 const Settings = () => <Text>Settings</Text>;
 
@@ -60,7 +59,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Charts"
-        component={Charts}
+        component={ChartsScreen}
         options={{
           tabBarLabel: 'Charts',
           tabBarIcon: ({ color, size }) => (

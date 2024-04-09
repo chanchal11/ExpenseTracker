@@ -92,7 +92,7 @@ const ExpenseTracker: React.FC = () => {
           <DateRangePicker defaultStartDate={defaultStartDate} defaultEndDate={defaultEndDate} onDateRangeSelected={(startDate: Date, endDate: Date) => {setStartDate(startDate); setEndDate(endDate);}} />
         </View>
         <ExpenseList expenses={filteredExpenses} />
-        <Text style={{textAlign: 'center', fontSize: 30, color: theme.colors.primary, paddingTop: 20 }} >Total: $ {filteredExpenses.reduce((acc:number,cv:Expense) => acc + cv.amount, 0 )}</Text>
+        <Text style={{textAlign: 'center', fontSize: 30, color: theme.colors.primary, paddingTop: 20 }} >Total: ₹ {filteredExpenses.reduce((acc:number,cv:Expense) => acc + cv.amount, 0 )}</Text>
         <FloatingButton onPress={() => setDialogVisible(true)} />
         <ExpenseDialog
           visible={dialogVisible}
