@@ -59,8 +59,14 @@ const ExpensePieChart: React.FC<ExpensePieChartProps> = ({ expenses }) => {
 };
 
 // Function to generate random color
+const usedColors = new Set();
 const getRandomColor = () => {
-  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+  let color;
+  do {
+    color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  } while (usedColors.has(color) || color === '#FFFFFF');
+  usedColors.add(color);
+  return color;
 };
 
 const styles = StyleSheet.create({
