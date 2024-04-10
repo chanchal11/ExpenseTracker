@@ -10,21 +10,7 @@ import { Provider } from 'react-redux';
 import store from './store/configureStore';
 import ExpenseTracker from './screens/ExpenseTracker';
 import { ChartsScreen } from './screens/Charts';
-
-// not needed delete it
-const MusicRoute = ({ }: any) => {
-
-  const navigation = useNavigation();
-
-  return (
-    <View>
-      <Text>Music</Text>
-      <Button mode="contained" onPress={() => navigation.navigate('Notifications' as never)} >Albums</Button>
-    </View>
-  );
-};
-
-const Settings = () => <Text>Settings</Text>;
+import SettingsPage from './screens/Settings';
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +55,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={SettingsPage}
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (

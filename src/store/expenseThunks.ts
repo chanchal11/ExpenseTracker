@@ -1,17 +1,8 @@
 // expenseThunks.ts
 import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
-import { addExpense } from './expenseSlice';
-import { saveExpenseToSQLite } from '../database'; // Define function to save expense to SQLite
+import { addExpense, clearDataAction, clearDataExceptCurrentMonthAction } from './expenseSlice';
+import { clearAllDataFromDatabase, clearDataExceptCurrentMonthFromDatabase, saveExpenseToSQLite } from '../database'; // Define function to save expense to SQLite
 import { Expense } from '../types';
-
-// export const addExpenseWithSQLite: any = createAsyncThunk(
-//     'expenses/addExpenseWithSQLite',
-//     async (expense: Expense) => {
-//         await saveExpenseToSQLite(expense);
-//         return expense;
-//     }
-// );
-
 
 export const addExpenseWithSQLite: any = (expense: Expense) => {
     return (dispatch : Dispatch) => {
@@ -24,3 +15,13 @@ export const addExpenseWithSQLite: any = (expense: Expense) => {
             });
     } 
 }
+
+export const clearDataExceptCurrentMonth: any = () => async (dispatch: Dispatch) => {
+    await clearDataExceptCurrentMonthFromDatabase();
+    dispatch(clearDataExceptCurrentMonthAction());
+  };
+  
+  export const clearData: any = () => async (dispatch: Dispatch) => {
+    await clearAllDataFromDatabase();
+    dispatch(clearDataAction());
+  };

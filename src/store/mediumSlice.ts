@@ -22,12 +22,14 @@ export const mediumSlice = createSlice({
       state.mediums.push(action.payload);
       console.log(state.mediums);
     },
-    // Add other reducers as needed
+    deleteAMedium: (state, action: PayloadAction<string>) => {
+      state.mediums = state.mediums.filter((medium) => medium.medium !== action.payload);
+    }
   },
 });
 
 export const selectMediums = (state: RootState) => state.mediums.mediums;
 
-export const { setMediums, addMedium } = mediumSlice.actions;
+export const { setMediums, addMedium, deleteAMedium } = mediumSlice.actions;
 
 export default mediumSlice.reducer;

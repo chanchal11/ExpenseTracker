@@ -20,12 +20,18 @@ export const expenseSlice = createSlice({
     },
     addExpense: (state, action: PayloadAction<Expense>) => {
       state.expenses.push(action.payload);
+    },
+    clearDataExceptCurrentMonthAction: (state) => {
+      state.expenses = state.expenses.filter((expense) => new Date(expense.date).getMonth() === new Date().getMonth());
+    },
+    clearDataAction: (state) => {
+      state.expenses = [];
     }
   },
 });
 
 export const selectExpenses = (state: RootState) => state.expenses.expenses;
 
-export const { setExpenses, addExpense } = expenseSlice.actions;
+export const { setExpenses, addExpense, clearDataExceptCurrentMonthAction, clearDataAction } = expenseSlice.actions;
 
 export default expenseSlice.reducer;

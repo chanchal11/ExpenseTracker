@@ -1,16 +1,8 @@
 // mediumThunks.ts
 import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
-import { addMedium } from './mediumSlice';
-import { Medium } from '../types'; // Assuming Medium interface is defined in types.ts
-import { saveMediumToSQLite } from '../database'; // Define function to save medium to SQLite
-
-// export const addMediumWithSQLite: any = createAsyncThunk(
-//   'mediums/addMediumWithSQLite',
-//   async (medium: Medium) => {
-//     await saveMediumToSQLite(medium);
-//     return medium;
-//   }
-// );
+import { addMedium, deleteAMedium } from './mediumSlice';
+import { Medium } from '../types';
+import { deleteAMediumFromDatabase, saveMediumToSQLite } from '../database';
 
 export const addMediumWithSQLite: any = (medium: Medium) => {
   return (dispatch : Dispatch) => {
@@ -23,3 +15,8 @@ export const addMediumWithSQLite: any = (medium: Medium) => {
       });
   } 
 }
+
+export const deleteMedium: any = (medium: string) => async (dispatch: Dispatch) => {
+  await deleteAMediumFromDatabase(medium);
+  dispatch(deleteAMedium(medium));
+};

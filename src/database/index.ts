@@ -125,3 +125,60 @@ export const saveMediumToSQLite = async (medium: Medium): Promise<void> => {
         });
     });
 };
+
+export const clearDataExceptCurrentMonthFromDatabase = async () => {
+    return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                'DELETE FROM expenses WHERE date < ?',
+                [new Date().getTime()],
+                () => {
+                    console.log('Data cleared successfully');
+                    resolve(true);
+                },
+                (_, error) => {
+                    console.error('Error clearing data:', error);
+                    reject(error);
+                }
+            );
+        });
+    });
+}
+
+export const clearAllDataFromDatabase = async () => {
+    return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                'DELETE FROM expenses',
+                [],
+                () => {
+                    console.log('Data cleared successfully');
+                    resolve(true);
+                },
+                (_, error) => {
+                    console.error('Error clearing data:', error);
+                    reject(error);
+                }
+            );
+        });
+    });
+}
+
+export const deleteAMediumFromDatabase = async (medium: string) => {
+    return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                'DELETE FROM mediums WHERE medium = ?',
+                [medium],
+                () => {
+                    console.log('Data cleared successfully');
+                    resolve(true);
+                },
+                (_, error) => {
+                    console.error('Error clearing data:', error);
+                    reject(error);
+                }
+            );
+        });
+    });
+}
