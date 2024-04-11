@@ -27,8 +27,8 @@ Contributions are welcome! Please open a pull request or an issue if you have an
 
 ## Screenshots
 
-![Main Screen](screenshots/main-screen.png)
-![New Expense Screen](screenshots/new-expense-screen.png)
-![Edit Expense Screen](screenshots/edit-expense-screen.png)
-![Filter By Date Screen](screenshots/filter-by-date-screen.png)
+![Main Screen](screenshots/Screenshot%202024-04-11%20115302.png)
+![New Expense Screen](screenshots/Screenshot%202024-04-11%20115214.png)
+![Charts](screenshots/Screenshot%202024-04-11%20115427.png)
+![Settings](screenshots/Screenshot%202024-04-11%20115457.png)
 
