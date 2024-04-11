@@ -21,7 +21,7 @@ Expense Tracker is a simple app for tracking your expenses.
 
 ## Installation and Setup
 
-1. Clone this repository: `git clone https://github.com/your-username/expense-tracker.git`
+1. Clone this repository: `git clone https://github.com/chanchal11/ExpenseTracker.git`
 2. Install dependencies: `npm install` or `yarn install`
 3. Start the Metro server: `npm start` or `yarn start`
 4. Open a new terminal and run `npx react-native run-android` for Android or `npx react-native run-ios` for iOS
