@@ -17,22 +17,6 @@ import { loadInitialExpensesFromSQLite, loadInitialMediumFromSQLite } from '../d
 import DateRangePicker from '../components/DateRangePicker';
 import { useDefaultMonthDates } from '../hooks/useDefaultMonthDates';
 
-// not needed delete it
-const applyFilters = (expenses: ExpenseWithId[], startDate: Date | null, endDate: Date | null, medium: string) => {
-  let newFilteredExpenses: ExpenseWithId[] = [...expenses];
-  if (startDate && endDate) {
-    newFilteredExpenses = newFilteredExpenses.filter((expense) => {
-      const expenseDate = new Date(expense.date);
-      return expenseDate >= startDate && expenseDate <= endDate;
-    });
-  }
-  if (medium) {
-    newFilteredExpenses = newFilteredExpenses.filter((expense) => expense.medium === medium);
-  }
-  return newFilteredExpenses;
-};
-
-
 const ExpenseTracker: React.FC = () => {
   const dispatch = useDispatch();  
   const expenses = useSelector((state: any) => state.expenses.expenses);

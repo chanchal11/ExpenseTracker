@@ -1,5 +1,5 @@
 // mediumThunks.ts
-import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
+import { Dispatch } from '@reduxjs/toolkit';
 import { addMedium, deleteAMedium } from './mediumSlice';
 import { Medium } from '../types';
 import { deleteAllMediumFromDatabase, deleteAMediumFromDatabase, saveMediumToSQLite } from '../database';
