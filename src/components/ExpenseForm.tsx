@@ -36,7 +36,7 @@ const ExpenseForm: React.FC<any> = ({ onSubmit }: any) => {
         keyboardType="numeric"
       />
       <PaperInput
-        label="Medium"
+        label="Medium (eg. food, travel etc.)"
         value={medium}
         onChangeText={setMedium}
       />
