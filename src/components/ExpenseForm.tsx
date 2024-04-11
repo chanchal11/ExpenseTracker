@@ -41,7 +41,7 @@ const ExpenseForm: React.FC<any> = ({ onSubmit }: any) => {
         onChangeText={setMedium}
       />
       <DatePicker
-        date={new Date()}
+        date={date}
         onDateChange={setDate}
         mode="date"
       />

@@ -182,3 +182,22 @@ export const deleteAMediumFromDatabase = async (medium: string) => {
         });
     });
 }
+
+export const deleteAllMediumFromDatabase = async () => {
+    return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                'DELETE FROM mediums',
+                [],
+                () => {
+                    console.log('Data cleared successfully');
+                    resolve(true);
+                },
+                (_, error) => {
+                    console.error('Error clearing data:', error);
+                    reject(error);
+                }
+            );
+        });
+    });
+}

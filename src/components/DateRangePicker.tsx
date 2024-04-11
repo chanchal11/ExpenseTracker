@@ -46,7 +46,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onDateRangeSelected, 
         style={{ marginBottom: 10 }}
         theme={{ colors: { primary: theme.colors.primary } }}
       >
-        {buttonTitle}
+        <Text style={{ color: theme.colors.surface, fontSize: 10 }}>{buttonTitle}</Text>
       </Button>
       <Portal>
         <Dialog visible={visible} onDismiss={() => setVisible(false)}>

@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DateRangePicker from "../components/DateRangePicker";
 import { ScrollView, View } from "react-native";
 import ExpensePieChart from "../components/ExpensePieChart";
 import { ExpenseWithId } from "../types";
 import { useDefaultMonthDates } from "../hooks/useDefaultMonthDates";
-import { PaperProvider } from "react-native-paper";
+import { PaperProvider, Text } from "react-native-paper";
 import ExpenseCalendarHeatmap from "../components/ExpenseCalendarHeatmap";
 
 export const ChartsScreen = () => {
-  const expenses = useSelector((state: any) => state.expenses.expenses);
+  const expenses: ExpenseWithId[] = useSelector((state: any) => state.expenses.expenses);
   const [defaultStartDate, defaultEndDate] = useDefaultMonthDates();
-  const [startDate, setStartDate] = useState<Date | null>(defaultStartDate);
-  const [endDate, setEndDate] = useState<Date | null>(defaultEndDate);
+  const [startDate, setStartDate] = useState<Date>(defaultStartDate);
+  const [endDate, setEndDate] = useState<Date>(defaultEndDate);
+  const [ filteredExpenses, setFilteredExpenses ] = useState<ExpenseWithId[]>([]);
+  
+  useEffect(() => {
+    setFilteredExpenses(expenses.filter((expense: ExpenseWithId) => new Date(expense.date) >= startDate && new Date(expense.date) <= endDate));
+  }, [ expenses, startDate, endDate  ] )
 
   return (
     <PaperProvider>
-      <View>
+     { expenses.length > 0 &&  <View>
         <DateRangePicker
           defaultStartDate={defaultStartDate}
           defaultEndDate={defaultEndDate}
@@ -27,12 +32,13 @@ export const ChartsScreen = () => {
         />
         {startDate && endDate && (
           <>
-            <ExpensePieChart expenses={expenses.filter((expense: ExpenseWithId) => new Date(expense.date) >= startDate && new Date(expense.date) <= endDate)} />
-            <ExpenseCalendarHeatmap expenses={expenses.filter((expense: ExpenseWithId) => new Date(expense.date) >= startDate && new Date(expense.date) <= endDate)} startDate={startDate} endDate={endDate} />
+            <ExpensePieChart expenses={filteredExpenses} />
+            <ExpenseCalendarHeatmap expenses={filteredExpenses} startDate={startDate} endDate={endDate} />
           </>
         )}
 
-      </View>
+      </View>}
+      {!expenses.length && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} ><Text style={{ textAlign: 'center', fontSize: 20 }} >No expenses found</Text></View>}
     </PaperProvider>
   );
 };
